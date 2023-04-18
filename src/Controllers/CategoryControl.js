@@ -1,4 +1,4 @@
-const knex = require('../connection')
+const knex = require('../Connection')
 
 const listarCategories = async (req, res) => {
     try {
@@ -6,7 +6,7 @@ const listarCategories = async (req, res) => {
         return res.status(200).json(categoriaListar)
 
     } catch (error) {
-        console.log(error.message)
+
         return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     }
 }
