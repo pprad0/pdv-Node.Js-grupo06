@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const senhaHash = require('../SenhaHash');
-const knex = require('../Connection')
+const knex = require('../connection')
 
 
 const loginUser = async (req, res) => {

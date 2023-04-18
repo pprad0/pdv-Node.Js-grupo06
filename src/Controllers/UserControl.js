@@ -1,4 +1,4 @@
-const knex = require('../Connection');
+const knex = require('../connection');
 const bcrypt = require('bcrypt');;
 
 
