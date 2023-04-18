@@ -1,1 +1,1 @@
-module.exports = "syntaxerror";
+module.exports = process.env.SENHAHASH;
