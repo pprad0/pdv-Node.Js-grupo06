@@ -5,7 +5,7 @@ CREATE TABLE USUARIOS
   id serial primary key,
   nome text,
   email text unique,
-  senha text
+  senha text,
 );
 
 CREATE TABLE CATEGORIAS
