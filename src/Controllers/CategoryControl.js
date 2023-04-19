@@ -1,4 +1,4 @@
-const knex = require('../Connection')
+const knex = require('../db/Connection')
 
 const listarCategories = async (req, res) => {
     try {

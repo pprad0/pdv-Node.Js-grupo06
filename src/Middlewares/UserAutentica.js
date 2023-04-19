@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const senhaHash = require('../SenhaHash');
-const knex = require('../Connection')
+const knex = require('../db/Connection')
 
 const autenticarUser = async (req, res, next) => {
     const { authorization } = req.headers;

@@ -1,9 +1,9 @@
 const express = require('express')
-const rotas = require('./Rotas')
+const rotas = require('./routes/Rotas')
 const cors = require('cors');
 
 const app = express()
-
+app.use(express.static("frontend"))
 const corsOptions ={
     origin:'*', 
     credentials:true,            //access-control-allow-credentials:true
