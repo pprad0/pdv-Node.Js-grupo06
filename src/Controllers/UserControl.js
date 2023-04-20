@@ -32,8 +32,8 @@ const cadastrarUser = async (req, res) => {
     }
 }
 
-const detalharUser = (req, res) => {
-    console.log(usuario)
+const detalharUser = async (req, res) => {
+    res.status(200).json({ usuário: req.usuario })
 }
 
 
