@@ -20,7 +20,7 @@ const autenticarUser = async (req, res, next) => {
             return res.status(404).json({ mensagem: 'Não autorizado !' })
         }
 
-        const { senha: _, usuario } = rows[0]
+        const { senha: _, ...usuario } = userExistente
 
         req.usuario = usuario
         next()
