@@ -32,6 +32,13 @@ const cadastrarUser = async (req, res) => {
     }
 }
 
+const detalharUser = (req, res) => {
+    console.log(req.usuario)
+}
 
 
-module.exports = cadastrarUser;
+
+module.exports = {
+    cadastrarUser,
+    detalharUser
+};
