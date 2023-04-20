@@ -33,7 +33,7 @@ const cadastrarUser = async (req, res) => {
 }
 
 const detalharUser = (req, res) => {
-    console.log(req.usuario)
+    console.log(usuario)
 }
 
 
