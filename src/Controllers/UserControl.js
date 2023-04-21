@@ -33,7 +33,7 @@ const cadastrarUser = async (req, res) => {
 }
 
 const detalharUser = async (req, res) => {
-    res.status(200).json({ usuário: req.usuario })
+    res.status(200).json({ usuario: req.usuario })
 }
 
 
