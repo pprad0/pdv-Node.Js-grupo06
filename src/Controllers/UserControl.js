@@ -24,6 +24,11 @@ const cadastrarUser = async (req, res) => {
             senha: senhAcrip
         })
 
+        process.on('SIGINT', async () => {
+            await knex.destroy();
+            process.exit(0);
+        })
+
         return res.status(201).send()
 
     } catch (error) {
