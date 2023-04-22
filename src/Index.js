@@ -3,6 +3,7 @@ const rotas = require('./routes/Rotas')
 const cors = require('cors');
 
 const app = express()
+app.use(express.static(path.join(__dirname, "desafio-front")));
 app.use(express.static("desafio-front"))
 const corsOptions = {
     origin: '*',
