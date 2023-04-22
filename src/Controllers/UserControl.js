@@ -27,7 +27,9 @@ const cadastrarUser = async (req, res) => {
         return res.status(201).send()
 
     } catch (error) {
-        return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        return res.status(500).json(error.message)
+
+        // return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     }
 }
 
