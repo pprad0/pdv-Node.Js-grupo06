@@ -10,9 +10,9 @@ rotas.post('/usuario', cadastrarUser)
 rotas.get('/categorias', listarCategories)
 rotas.post('/login', loginUser)
 
-rotas.use(autenticarUser)
+//rotas.use(autenticarUser)
 
-rotas.get('/usuario', detalharUser)
-rotas.put('/usuario', editarUser)
+rotas.get('/usuario', detalharUser,autenticarUser)
+rotas.put('/usuario', editarUser,autenticarUser)
 
 module.exports = rotas;
