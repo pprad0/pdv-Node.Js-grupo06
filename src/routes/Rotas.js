@@ -6,6 +6,7 @@ const autenticarUser = require('../Middlewares/UserAutentica');
 const loginUser = require('../Controllers/UserLogin');
 const { cadastrarUser, detalharUser, editarUser } = require('../Controllers/UserControl');
 
+rotas.get('/',express.static("desafio-front"))
 rotas.post('/usuario', cadastrarUser)
 rotas.get('/categorias', listarCategories)
 rotas.post('/login', loginUser)
