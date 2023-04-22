@@ -16,6 +16,11 @@ const autenticarUser = async (req, res, next) => {
 
         const userExistente = await knex('usuarios').where({ id }).first()
 
+        process.on('SIGINT', async () => {
+            await knex.destroy();
+            process.exit(0);
+        })
+
         if (!userExistente) {
             return res.status(404).json({ mensagem: 'Não autorizado !' })
         }

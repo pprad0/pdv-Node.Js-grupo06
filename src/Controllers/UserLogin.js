@@ -14,6 +14,11 @@ const loginUser = async (req, res) => {
     try {
         const usuario = await knex('usuarios').where({ email }).first()
 
+        process.on('SIGINT', async () => {
+            await knex.destroy();
+            process.exit(0);
+        })
+
         if (!usuario) {
             return res.status(404).json('Usuario não encontrado !')
         }
