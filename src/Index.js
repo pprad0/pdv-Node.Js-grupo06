@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express()
 app.use(express.static(path.join(__dirname, "desafio-front")));
-app.use(express.static("desafio-front"))
+//app.use(express.static("desafio-front"))
 const corsOptions = {
     origin: '*',
     credentials: true,            //access-control-allow-credentials:true
