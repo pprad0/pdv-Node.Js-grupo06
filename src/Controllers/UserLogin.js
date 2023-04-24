@@ -7,9 +7,6 @@ const knex = require('../db/Connection')
 const loginUser = async (req, res) => {
     const { email, senha } = req.body;
 
-    if (!email || !senha) {
-        return res.status(404).json('É obrigatória a informação de e-mail e senha !')
-    }
 
     try {
         const usuario = await knex('usuarios').where({ email }).first()

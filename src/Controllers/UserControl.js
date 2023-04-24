@@ -46,9 +46,7 @@ const detalharUser = async (req, res) => {
 const editarUser = async (req, res) => {
     const { nome, email, senha } = req.body
 
-    if (!nome || !email || !senha) {
-        return res.status(400).json('A informação do nome, email e senha são parametros obrigatórios !')
-    }
+    
 
     try {
 
