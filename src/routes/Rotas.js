@@ -6,16 +6,18 @@ const autenticarUser = require('../Middlewares/UserAutentica');
 const loginUser = require('../Controllers/UserLogin');
 const { cadastrarUser, detalharUser, editarUser } = require('../Controllers/UserControl');
 const validationMiddlewareUser = require('../Middlewares/userValidation');
+const loginValidationMiddleware = require('../Middlewares/loginValidation')
+
 
 rotas.get('/', express.static("desafio-front"))
 rotas.get('/produtos', express.static("desafio-front"))
 rotas.post('/usuario',validationMiddlewareUser, cadastrarUser)
 rotas.get('/categorias', listarCategories)
-rotas.post('/login', loginUser)
+rotas.post('/login',loginValidationMiddleware, loginUser)
 
 rotas.use(autenticarUser)
 
 rotas.get('/usuario', detalharUser)
-rotas.put('/usuario', editarUser)
+rotas.put('/usuario',validationMiddlewareUser, editarUser)
 
 module.exports = rotas;
