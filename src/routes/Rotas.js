@@ -9,15 +9,15 @@ const validationMiddlewareUser = require('../Middlewares/userValidation');
 const loginValidationMiddleware = require('../Middlewares/loginValidation')
 
 
-rotas.get('/', express.static("desafio-front"))
-rotas.get('/produtos', express.static("desafio-front"))
-rotas.post('/usuario',validationMiddlewareUser, cadastrarUser)
-rotas.get('/categorias', listarCategories)
-rotas.post('/login',loginValidationMiddleware, loginUser)
+rotas.get('/', express.static("desafio-front"));
+rotas.get('/produtos', express.static("desafio-front"));
+rotas.post('/usuario',validationMiddlewareUser, cadastrarUser);
+rotas.get('/categorias', listarCategories);
+rotas.post('/login',loginValidationMiddleware, loginUser);
 
-rotas.use(autenticarUser)
+rotas.use(autenticarUser);
 
-rotas.get('/usuario', detalharUser)
-rotas.put('/usuario',validationMiddlewareUser, editarUser)
+rotas.get('/usuario', detalharUser);
+rotas.put('/usuario',validationMiddlewareUser, editarUser);
 
 module.exports = rotas;
