@@ -6,10 +6,7 @@ const schema = require('../models/userSchema');
 const cadastrarUser = async (req, res) => {
     const { nome, email, senha } = req.body
     
-    if (!nome || !email || !senha) {
-        return res.status(400).json('A informação do nome, email e senha são parametros obrigatórios !')
-    }
-
+   
     try {
         const existeEmail = await knex('usuarios').where({ email }).first()
 
