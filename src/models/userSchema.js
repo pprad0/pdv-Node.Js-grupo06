@@ -3,7 +3,7 @@ const Joi = require('joi')
 //User-defined function to validate the user
 const schema = Joi.object({
     nome: Joi.string()
-        .alphanum()
+        
         .min(3)
         .max(30)
         .required(),
