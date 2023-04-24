@@ -11,6 +11,15 @@ const autenticarUser = async (req, res, next) => {
 
     const token = authorization.split(' ')[1]
 
+    jwt.verify(token, senhaHash, function(err, decoded) { 
+        if (err) 
+            return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
+        
+            req.usuario = decoded.id; 
+        
+        next(); 
+    }); 
+    
     try {
         const { id } = jwt.verify(token, senhaHash)
 
