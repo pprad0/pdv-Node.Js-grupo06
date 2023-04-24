@@ -8,10 +8,12 @@ const validationMiddlewareUser = (request, response, next) => {
   const result = schema.schema.validate({nome:nome,email:email,senha:senha}, {messages})
 
   if(result.error){
-    console.log(result.error.details)
+    response.status(400).json({  "mensagem": "Todos os campos obrigatórios devem ser informados." })
+  }else{
+    next()
   }
     
-    response.status(400).json({  "mensagem": "Todos os campos obrigatórios devem ser informados." })
+ 
   
 }
 
