@@ -15,5 +15,5 @@ const loginSchema = Joi.object({
 })
 
 module.exports = {
-    schema
+    loginSchema
 }

@@ -1,11 +1,12 @@
 const express = require('express');
 const messages =require ('joi-translation-pt-br')
-const schema = require("../models/userSchema");
+const loginSchema = require("../models/loginSchema");
 
  
 const loginValidationMiddleware = (request, response, next) => {
   const { email, senha } = request.body
-  const result = schema.schema.validate({email:email,senha:senha}, {messages})
+  console.log(request.body)
+  const result = loginSchema.schema.validate({email:email,senha:senha}, {messages})
 
   if(result.error){
     
