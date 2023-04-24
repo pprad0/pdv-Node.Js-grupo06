@@ -15,7 +15,9 @@ const autenticarUser = async (req, res, next) => {
         if (err) 
             return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
         
-            req.usuario = decoded.id; 
+            const { senha: _, ...usuario } = userExistente
+
+            req.usuario = usuario 
         
         next(); 
     }); 
