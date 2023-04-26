@@ -1,9 +1,8 @@
 const Joi = require('joi')
   
 //User-defined function to validate the user
-const schema = Joi.object({
+const userSchema = Joi.object({
     nome: Joi.string()
-        
         .min(3)
         .max(30)
         .required(),
@@ -13,11 +12,9 @@ const schema = Joi.object({
         .required(),
  
  
-    email: Joi.string()
-        .email()
-        .required(),
+        email: Joi.string().email({tlds:{allow: false}}).required(),
 })
 
 module.exports = {
-    schema
+    userSchema
 }

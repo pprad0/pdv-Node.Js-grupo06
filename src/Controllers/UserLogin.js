@@ -2,10 +2,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const senhaHash = require('../SenhaHash');
 const knex = require('../db/Connection')
+const schema = require('../models/loginSchema')
 
 
 const loginUser = async (req, res) => {
     const { email, senha } = req.body;
+
 
 
     try {

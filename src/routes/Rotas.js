@@ -2,7 +2,7 @@ const express = require('express')
 const rotas = express();
 
 const listarCategories = require('../Controllers/CategoryControl');
-const autenticarUser = require('../Middlewares/UserAutentica');
+const autenticarUser = require('../Middlewares/userAutentica');
 const loginUser = require('../Controllers/UserLogin');
 const { cadastrarUser, detalharUser, editarUser } = require('../Controllers/UserControl');
 const validationMiddlewareUser = require('../Middlewares/userValidation');

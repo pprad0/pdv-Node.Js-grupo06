@@ -37,7 +37,23 @@ const cadastrarUser = async (req, res) => {
 }
 
 const detalharUser = async (req, res) => {
-    res.status(200).json({ usuario: req.usuario })
+    const id = req.id
+    const userExistente = await knex('usuarios').where({ id }).first()
+
+        process.on('SIGINT', async () => {
+            await knex.destroy();
+            process.exit(0);
+        })
+
+        if (!userExistente) {
+            return res.status(404).json({ mensagem: 'Não autorizado !' })
+        }
+
+        const { senha: _, ...usuario } = userExistente
+
+        req.usuario = usuario
+        
+    return res.status(200).json({ usuario: req.usuario })
 }
 
 const editarUser = async (req, res) => {
