@@ -2,11 +2,11 @@ const express = require('express')
 const rotas = express();
 
 const listarCategories = require('../Controllers/CategoryControl');
-const autenticarUser = require('../middlewares/UserAutentica');
+const autenticarUser = require('../Middlewares/UserAutentica');
 const loginUser = require('../Controllers/UserLogin');
 const { cadastrarUser, detalharUser, editarUser } = require('../Controllers/UserControl');
-const validationMiddlewareUser = require('../middlewares/userValidation');
-const loginValidationMiddleware = require('../middlewares/loginValidation')
+const validationMiddlewareUser = require('../Middlewares/userValidation');
+const loginValidationMiddleware = require('../Middlewares/loginValidation')
 
 
 rotas.get('/', express.static("desafio-front"));
