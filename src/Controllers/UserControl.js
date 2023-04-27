@@ -11,7 +11,7 @@ const cadastrarUser = async (req, res) => {
         const existeEmail = await knex('usuarios').where({ email }).first()
 
         if (existeEmail) {
-            return res.status(400).json({Message:'Email já cadastrado !'})
+            return res.status(400).json({ Message: 'Email já cadastrado !' })
         }
 
         const senhAcrip = await bcrypt.hash(senha, 10)
@@ -70,7 +70,7 @@ const editarUser = async (req, res) => {
         const senhAcrip = await bcrypt.hash(senha, 10)
 
         const usuario = await knex('usuarios')
-            .where('id', '=', req.usuario.id)
+            .where('id', '=', req.id)
             .update({
                 nome,
                 email,
@@ -85,9 +85,8 @@ const editarUser = async (req, res) => {
         return res.status(201).send()
 
     } catch (error) {
-        return res.status(500).json(error.message)
 
-        // return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     }
 }
 

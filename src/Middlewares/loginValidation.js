@@ -15,7 +15,6 @@ const loginValidationMiddleware = (request, response, next) => {
 
     if (result.error) {
 
-
         return response.status(400).send({ message: result.error.details[0].message.replace(/["\\]/g, '') })
     } else {
         next()
