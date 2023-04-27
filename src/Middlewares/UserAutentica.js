@@ -10,9 +10,6 @@ const autenticarUser = async (req, res, next) => {
         return res.status(404).json({ mensagem: 'Não autorizado !' })
     } else {
 
-
-
-
         try {
             const token = authorization.split(' ')[1]
 
