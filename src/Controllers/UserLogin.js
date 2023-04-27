@@ -9,7 +9,6 @@ const loginUser = async (req, res) => {
     const { email, senha } = req.body;
 
 
-
     try {
         const usuario = await knex('usuarios').where({ email }).first()
 
