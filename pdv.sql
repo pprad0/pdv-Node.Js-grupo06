@@ -1,3 +1,4 @@
+-- sprint 1
 CREATE DATABASE PDV ;
 
 CREATE TABLE USUARIOS
@@ -27,3 +28,28 @@ values
   ('Moda'),
   ('Bebê'),
   ('Games')
+;
+
+-- sprint 2
+create table produtos
+(
+  id serial primary key,
+  descricao text not null,
+  quantidade_estoque integer not null,
+  valor integer not null,
+  categoria_id integer references categorias(id)
+);
+
+create table clientes
+(
+  id serial primary key,
+  nome text not null,
+  email text unique not null,
+  cpf integer unique not null,
+  cep integer,
+  rua text,
+  numero integer,
+  bairro text,
+  cidade text,
+  estado text
+);
