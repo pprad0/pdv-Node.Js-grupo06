@@ -29,5 +29,6 @@ rotas.use(autenticarUser);
 rotas.get('/usuario', detalharUser);
 rotas.put('/usuario', validationMiddlewareUser, editarUser);
 rotas.post('/produto', productValidation, produto.cadastrarProduto)
+rotas.put('/produto/:id', productValidation, produto.atualizarProduto)
 
 module.exports = rotas;
