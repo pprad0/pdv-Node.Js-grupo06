@@ -3,16 +3,16 @@ const rotas = express();
 
 //importação User
 const { cadastrarUser, detalharUser, editarUser } = require('../controllers/User');
-const validationMiddlewareUser = require('../middlewares/userValidation');
-const autenticarUser = require('../middlewares/UserAutentica');
+const validationMiddlewareUser = require('../middlewares/userValidate');
+const autenticarUser = require('../middlewares/userAuth');
 
 // importação Login
-const loginUser = require('../controllers/UserLogin');
-const loginValidationMiddleware = require('../middlewares/loginValidation')
+const loginUser = require('../controllers/Login');
+const loginValidationMiddleware = require('../middlewares/loginValidate')
 
 //importação Product
 const produto = require('../controllers/Product')
-const productValidation = require('../middlewares/productValidation')
+const productValidation = require('../middlewares/productValidate')
 
 //importação Category
 const listarCategories = require('../controllers/Category');
