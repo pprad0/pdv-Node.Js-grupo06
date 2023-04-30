@@ -1,9 +1,10 @@
 const express = require('express')
 const rotas = express();
+const path = require('path');
 
 //importação User
 const { cadastrarUser, detalharUser, editarUser } = require('../controllers/User');
-const validationMiddlewareUser = require('../middlewares/userValidation.js');
+const validationMiddlewareUser = require(path.join(__dirname, '../middlewares/userValidation.js'));
 const autenticarUser = require('../middlewares/UserAutentica');
 
 // importação Login
