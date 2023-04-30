@@ -1,9 +1,7 @@
 const knex = require('../db/Connection')
 
 const listarCategories = async (req, res) => {
-    
-    
-  
+
     try {
         const categoriaListar = await knex('categorias').returning('*')
         return res.status(200).json(categoriaListar)
