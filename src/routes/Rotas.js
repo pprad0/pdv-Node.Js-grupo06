@@ -4,7 +4,7 @@ const rotas = express();
 //importação User
 const { cadastrarUser, detalharUser, editarUser } = require('../controllers/User');
 const validationMiddlewareUser = require('../middlewares/userValidate');
-const autenticarUser = require('../middlewares/UserAuth');
+const autenticarUser = require('../middlewares/userAuth');
 
 // importação Login
 const loginUser = require('../controllers/Login');
