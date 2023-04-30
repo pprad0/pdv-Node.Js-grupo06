@@ -16,7 +16,7 @@ const autenticarUser = async (req, res, next) => {
 
 
                 if (err) {
-                    return res.status(401).send({ Message: "Token Invalido" })
+                    return res.status(401).send({ messagem: "Token Invalido" })
                 } else {
                     const { id } = decoded
                     req.id = id
