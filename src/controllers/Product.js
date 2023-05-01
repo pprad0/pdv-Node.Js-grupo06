@@ -77,8 +77,8 @@ const listarProdutosPorCategoria = async(req,res)=>{
         }
     }else{
         try {
-            const produtosListar = await knex('produtos').returning('*')
-            return res.status(200).json(produtosListar)
+            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
+            return res.status(200).json({listagem:produtosListar.rows})
         } catch (error) {
             return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
         }
