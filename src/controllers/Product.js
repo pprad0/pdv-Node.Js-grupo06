@@ -1,3 +1,4 @@
+const { isNumber } = require('class-validator')
 const knex = require('../db/Connection')
 const { id } = require('../models/productSchema')
 
@@ -64,9 +65,19 @@ const atualizarProduto = async (req, res) => {
     }
 
 }
+ function validarId(id,res){
+
+    return  !isNaN(id) 
+    
+
+}
+
 const listarProdutosPorCategoria = async(req,res)=>{
 
     const {categoria_id} = req.query
+        
+    if(validarId(categoria_id)){
+
     if(categoria_id){
         try {
             
@@ -84,6 +95,10 @@ const listarProdutosPorCategoria = async(req,res)=>{
         }
     }
 
+} else{
+    return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+
+}
 }
 async function consultarProduto(id){
 
@@ -99,30 +114,40 @@ async function consultarProduto(id){
 const listarProduto = async(req,res)=>{
 
         const {id} = req.params
-        const produto = await consultarProduto(id)
+        if(validarId(id)){
+            const produto = await consultarProduto(id)
 
-        if(produto){
-            return res.status(200).json(produto)
+            if(produto){
+                return res.status(200).json(produto)
+            }else{
+                return res.status(404).json({mensagem:"Produto não encontrado"})
+            }
         }else{
-            return res.status(404).json({mensagem:"Produto não encontrado"})
+            return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
         }
+        
     
 }
 const excluirProduto= async(req,res)=>{
 
     const {id} = req.params
-    const produto = await consultarProduto(id)
     
-    if(produto){
-        try {
-            const teste = await knex("produtos").del().where({id:produto.id})
-            return res.status(200).json({mensagem:"Produto excluido com sucesso!!"})
-        } catch (error) {
+    if(validarId(id)){
+        const produto = await consultarProduto(id)
+        if(produto){
+            try {
+                const teste = await knex("produtos").del().where({id:produto.id})
+                return res.status(200).json({mensagem:"Produto excluido com sucesso!!"})
+            } catch (error) {
+                return res.status(404).json({mensagem:"Produto não encontrado"})
+            }
+        }else{
             return res.status(404).json({mensagem:"Produto não encontrado"})
         }
     }else{
-        return res.status(404).json({mensagem:"Produto não encontrado"})
+        return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
     }
+    
 }
 
 module.exports = {
