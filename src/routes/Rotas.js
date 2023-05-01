@@ -32,6 +32,7 @@ rotas.post('/produto', productValidation, produto.cadastrarProduto);
 rotas.put('/produto/:id', productValidation, produto.atualizarProduto);
 rotas.get('/produto',produto.listarProdutosPorCategoria);
 rotas.get('/produto/:id',produto.listarProduto);
+rotas.delete('/produto',produto.excluirProduto);
 rotas.delete('/produto/:id',produto.excluirProduto);
 
 module.exports = rotas;

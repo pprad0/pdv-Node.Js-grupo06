@@ -96,7 +96,7 @@ const listarProdutosPorCategoria = async(req,res)=>{
     }
 
 } else{
-    return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+    return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
 
 }
 }
@@ -123,7 +123,7 @@ const listarProduto = async(req,res)=>{
                 return res.status(404).json({mensagem:"Produto não encontrado"})
             }
         }else{
-            return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+            return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
         }
         
     
@@ -145,7 +145,7 @@ const excluirProduto= async(req,res)=>{
             return res.status(404).json({mensagem:"Produto não encontrado"})
         }
     }else{
-        return res.status(500).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+        return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
     }
     
 }
