@@ -3,7 +3,7 @@ const rotas = require('./routes/Rotas')
 const cors = require('cors');
 
 const app = express()
-app.use(express.static("desafio-front"))
+//app.use(express.static("desafio-front"))
 const corsOptions = {
     origin: '*',
     credentials: true,            //access-control-allow-credentials:true
