@@ -1,4 +1,5 @@
 const knex = require('../db/Connection')
+const { id } = require('../models/productSchema')
 
 const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
@@ -6,7 +7,7 @@ const cadastrarProduto = async (req, res) => {
     try {
         const categoriaExiste = await knex('categorias').where("id", "=", categoria_id).first()
         if (!categoriaExiste) {
-            return res.status(400).json({ messagem: 'Categoria não encontrada, informe outra categoria.' })
+            return res.status(404).json({ messagem: 'Categoria não encontrada, informe outra categoria.' })
         }
 
         const inserirProduto = await knex('produtos')
@@ -17,7 +18,7 @@ const cadastrarProduto = async (req, res) => {
                 categoria_id
             })
 
-        return res.status(200).json()
+        return res.status(201).json()
 
 
     } catch (error) {
@@ -35,7 +36,7 @@ const atualizarProduto = async (req, res) => {
             .first()
 
         if (!categoriaExiste) {
-            return res.status(400).json({ messagem: 'Categoria não encontrada, informe outra categoria.' })
+            return res.status(404).json({ messagem: 'Categoria não encontrada, informe outra categoria.' })
         }
 
 
@@ -44,7 +45,7 @@ const atualizarProduto = async (req, res) => {
             .first()
 
         if (!existeProduto) {
-            return res.status(400).json({ mensagem: "Produto não existe, informe outro 'id' " })
+            return res.status(404).json({ mensagem: "Produto não existe, informe outro 'id' " })
         }
 
 
@@ -63,10 +64,73 @@ const atualizarProduto = async (req, res) => {
     }
 
 }
+const listarProdutosPorCategoria = async(req,res)=>{
+
+    const {categoria_id} = req.query
+    if(categoria_id){
+        try {
+            
+            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ',categoria_id)
+            return res.status(200).json({listagem:produtosListar.rows})
+        } catch (error) {
+            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        }
+    }else{
+        try {
+            const produtosListar = await knex('produtos').returning('*')
+            return res.status(200).json(produtosListar)
+        } catch (error) {
+            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        }
+    }
+
+}
+async function consultarProduto(id){
+
+    
+    const produtoExiste = await knex('produtos')
+            .where("id", "=", id)
+            .first()
+
+        return  produtoExiste ? produtoExiste : false
+    
+
+}
+const listarProduto = async(req,res)=>{
+
+        const {id} = req.params
+        const produto = await consultarProduto(id)
+
+        if(produto){
+            return res.status(200).json(produto)
+        }else{
+            return res.status(404).json({mensagem:"Produto não encontrado"})
+        }
+    
+}
+const excluirProduto= async(req,res)=>{
+
+    const {id} = req.params
+    const produto = await consultarProduto(id)
+    
+    if(produto){
+        try {
+            const teste = await knex("produtos").del().where({id:produto.id})
+            return res.status(200).json({mensagem:"Produto excluido com sucesso!!"})
+        } catch (error) {
+            return res.status(404).json({mensagem:"Produto não encontrado"})
+        }
+    }else{
+        return res.status(404).json({mensagem:"Produto não encontrado"})
+    }
+}
 
 module.exports = {
     cadastrarProduto,
-    atualizarProduto
+    atualizarProduto,
+    listarProdutosPorCategoria,
+    listarProduto,
+    excluirProduto
 }
 
 

@@ -28,7 +28,10 @@ rotas.use(autenticarUser);
 
 rotas.get('/usuario', user.detalharUser);
 rotas.put('/usuario', validationMiddlewareUser, user.editarUser);
-rotas.post('/produto', productValidation, produto.cadastrarProduto)
-rotas.put('/produto/:id', productValidation, produto.atualizarProduto)
+rotas.post('/produto', productValidation, produto.cadastrarProduto);
+rotas.put('/produto/:id', productValidation, produto.atualizarProduto);
+rotas.get('/produto',produto.listarProdutosPorCategoria);
+rotas.get('/produto/:id',produto.listarProduto);
+rotas.delete('/produto/:id',produto.excluirProduto);
 
 module.exports = rotas;
