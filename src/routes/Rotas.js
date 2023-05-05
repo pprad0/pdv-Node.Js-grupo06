@@ -6,7 +6,7 @@ const user = require('../controllers/User');
 const validationMiddlewareUser = require('../middlewares/userValidate');
 const autenticarUser = require('../middlewares/userAuth');
 
-// importação Login
+//importação Login
 const loginUser = require('../controllers/Login');
 const loginValidationMiddleware = require('../middlewares/loginValidate')
 
@@ -18,7 +18,7 @@ const productValidation = require('../middlewares/productValidate')
 const listarCategories = require('../controllers/Category');
 
 //importação de Clientes
-const { cadastrarCliente, editarCliente, listarCliente, detalharCliente } = require('../controllers/Clients');
+const cliente = require('../controllers/Clients');
 
 rotas.get('/', express.static("desafio-front"));
 rotas.get('/produtos', express.static("desafio-front"));
@@ -31,6 +31,7 @@ rotas.use(autenticarUser);
 
 rotas.get('/usuario', user.detalharUser);
 rotas.put('/usuario', validationMiddlewareUser, user.editarUser);
+
 rotas.post('/produto', productValidation, produto.cadastrarProduto);
 rotas.put('/produto/:id', productValidation, produto.atualizarProduto);
 rotas.get('/produto', produto.listarProdutosPorCategoria);
@@ -38,9 +39,9 @@ rotas.get('/produto/:id', produto.listarProduto);
 rotas.delete('/produto', produto.excluirProduto);
 rotas.delete('/produto/:id', produto.excluirProduto);
 
-//rotas.post('/cliente', cadastrarCliente);
-rotas.put('/cliente/:id', editarCliente);
-//rotas.get('/cliente', listarClientes);
-rotas.get('/cliente/:id', detalharCliente);
+//rotas.post('/cliente', cliente.cadastrarCliente);
+rotas.put('/cliente/:id', cliente.editarCliente);
+//rotas.get('/cliente', cliente.listarClientes);
+rotas.get('/cliente/:id', cliente.detalharCliente);
 
 module.exports = rotas;
