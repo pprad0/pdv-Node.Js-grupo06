@@ -39,9 +39,10 @@ rotas.get('/produto/:id', produto.listarProduto);
 rotas.delete('/produto', produto.excluirProduto);
 rotas.delete('/produto/:id', produto.excluirProduto);
 
-//rotas.post('/cliente', cliente.cadastrarCliente);
+
+rotas.get('/cliente',autenticarUser, cliente.listarClientes);
+rotas.post('/cliente',autenticarUser, cliente.cadastrarCliente);
 rotas.put('/cliente/:id', cliente.editarCliente);
-//rotas.get('/cliente', cliente.listarClientes);
 rotas.get('/cliente/:id', cliente.detalharCliente);
 
 module.exports = rotas;
