@@ -1,6 +1,30 @@
 const knex = require('../db/Connection')
 
-let cadastrarCliente;
+const cadastrarCliente = async (req, res) => {
+
+    const { nome, email, cpf } = req.body;
+
+    if(!nome || !email || !cpf){
+        return res.status(400).json({mensagem: 'A informação do nome, email e cpf são parametros obrigatórios !'});
+    }
+
+    try {      
+
+        const client = await knex('clientes').insert({
+        nome, 
+        email, 
+        cpf,
+        })
+            
+        return res.status(201).send()
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({mensagem: 'O servidor apresentou um erro !'});
+    }
+
+}
+
 
 const editarCliente = async (req, res) => {
     const { nome, email, cpf } = req.body;
@@ -46,7 +70,20 @@ const editarCliente = async (req, res) => {
 
 };
 
-let listarClientes;
+
+const listarClientes = async (req,res) => {
+
+    try{
+
+        clientesListar = await knex('clientes').returning('*');
+        return res.status(200).json(clientesListar);
+
+    }catch {
+        return res.status(500).json({ mensagem: 'O servidor apresentou um erro !'});
+    }
+
+}
+
 
 const detalharCliente = async (req, res) => {
     const { id } = req.params;
