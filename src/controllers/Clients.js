@@ -55,9 +55,16 @@ const editarCliente = async (req, res) => {
         return res.status(400).json({ mensagem: 'Insira um cpf válido e somente números, por favor.' })
     }
     try {
+        const encontrarCliente = await knex('clientes').where("id", id).first();
+
+        if (!encontrarCliente) {
+            return res.status(400).json({ mensagem: "Cliente não encontrado, insira outro 'id' de cliente." })
+        }
+
         if (await validarEmail(email) || await validarCpf(cpf)) {
             return res.status(400).json({ mensagem: 'E-mail e/ou CPF já estão sendo utilizados!' });
         };
+
 
         const editarCliente = await knex('clientes')
             .where('id', id)
