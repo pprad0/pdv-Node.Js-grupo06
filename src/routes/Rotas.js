@@ -19,6 +19,8 @@ const listarCategories = require('../controllers/Category');
 
 //importação de Clientes
 const cliente = require('../controllers/Clients');
+const clientValidation = require('../middlewares/clientValidate');
+
 
 rotas.get('/', express.static("desafio-front"));
 rotas.get('/produtos', express.static("desafio-front"));
@@ -40,9 +42,9 @@ rotas.delete('/produto', produto.excluirProduto);
 rotas.delete('/produto/:id', produto.excluirProduto);
 
 
-rotas.get('/cliente', autenticarUser, cliente.listarClientes);
-rotas.post('/cliente', autenticarUser, cliente.cadastrarCliente);
-rotas.put('/cliente/:id', cliente.editarCliente);
+rotas.post('/cliente', clientValidation, cliente.cadastrarCliente);
+rotas.get('/cliente', cliente.listarClientes);
+rotas.put('/cliente/:id', clientValidation, cliente.editarCliente);
 rotas.get('/cliente/:id', cliente.detalharCliente);
 
 module.exports = rotas;
