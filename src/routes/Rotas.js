@@ -40,8 +40,8 @@ rotas.delete('/produto', produto.excluirProduto);
 rotas.delete('/produto/:id', produto.excluirProduto);
 
 
-rotas.get('/cliente',autenticarUser, cliente.listarClientes);
-rotas.post('/cliente',autenticarUser, cliente.cadastrarCliente);
+rotas.get('/cliente', autenticarUser, cliente.listarClientes);
+rotas.post('/cliente', autenticarUser, cliente.cadastrarCliente);
 rotas.put('/cliente/:id', cliente.editarCliente);
 rotas.get('/cliente/:id', cliente.detalharCliente);
 
