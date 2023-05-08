@@ -75,20 +75,21 @@ const atualizarProduto = async (req, res) => {
 const listarProdutosPorCategoria = async(req,res)=>{
 
     const {categoria_id} = req.query
-        
-    if(validarId(categoria_id)){
+    
+    
+    if(!categoria_id){
+        try {
+            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
+            return res.status(200).json({listagem:produtosListar.rows})
+        } catch (error) {
+            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        }
+    }else if(validarId(categoria_id)){
 
     if(categoria_id){
         try {
             
             const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ',categoria_id)
-            return res.status(200).json({listagem:produtosListar.rows})
-        } catch (error) {
-            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
-        }
-    }else{
-        try {
-            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
             return res.status(200).json({listagem:produtosListar.rows})
         } catch (error) {
             return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
