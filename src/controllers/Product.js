@@ -34,7 +34,9 @@ const cadastrarProduto = async (req, res) => {
         
         return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     }
-}const atualizarProduto = async (req, res) => {
+}
+
+const atualizarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
     const { id } = req.params
 
