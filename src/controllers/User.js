@@ -22,11 +22,6 @@ const cadastrarUser = async (req, res) => {
             senha: senhAcrip
         })
 
-        process.on('SIGINT', async () => {
-            await knex.destroy();
-            process.exit(0);
-        })
-
         return res.status(201).send()
 
     } catch (error) {
@@ -37,11 +32,6 @@ const cadastrarUser = async (req, res) => {
 const detalharUser = async (req, res) => {
     const id = req.id
     const userExistente = await knex('usuarios').where({ id }).first()
-
-    process.on('SIGINT', async () => {
-        await knex.destroy();
-        process.exit(0);
-    })
 
     if (!userExistente) {
         return res.status(404).json({ mensagem: 'Não autorizado !' })
