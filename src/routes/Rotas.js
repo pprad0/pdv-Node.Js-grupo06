@@ -20,6 +20,9 @@ const listarCategories = require('../controllers/Category');
 //importação de Clientes
 const { cadastrarCliente, editarCliente, listarCliente, detalharCliente } = require('../controllers/Clients');
 
+//importacao cadastrar pedidos
+const { cadastrarPedido } = require('../controllers/Requests');
+
 rotas.get('/', express.static("desafio-front"));
 rotas.get('/produtos', express.static("desafio-front"));
 rotas.post('/login', loginValidationMiddleware, loginUser);
@@ -42,5 +45,8 @@ rotas.delete('/produto/:id', produto.excluirProduto);
 rotas.put('/cliente/:id', editarCliente);
 //rotas.get('/cliente', listarClientes);
 rotas.get('/cliente/:id', detalharCliente);
+
+//cadastrar pedidos
+rotas.post('/pedido', cadastrarPedido);
 
 module.exports = rotas;

@@ -53,3 +53,12 @@ create table clientes
   cidade text,
   estado text
 );
+
+-- sprint 3
+create table PEDIDOS (
+  id serial primary key,
+  cliente_id integer references clientes(id) not null,
+  observacao text,
+  produto_id integer references produtos(id) not null,
+  quantidade_produto integer not null
+  );

@@ -42,8 +42,6 @@ const editarCliente = async (req, res) => {
         return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     };
 
-
-
 };
 
 let listarClientes;

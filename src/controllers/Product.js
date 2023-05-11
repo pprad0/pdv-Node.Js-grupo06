@@ -8,7 +8,7 @@ const cadastrarProduto = async (req, res) => {
     try {
         const categoriaExiste = await knex('categorias').where("id", "=", categoria_id).first()
         if (!categoriaExiste) {
-            return res.status(404).json({ messagem: 'Categoria não encontrada, informe outra categoria.' })
+            return res.status(404).json({ mensagem: 'Categoria não encontrada, informe outra categoria.' })
         }
 
         const inserirProduto = await knex('produtos')
@@ -65,89 +65,89 @@ const atualizarProduto = async (req, res) => {
     }
 
 }
- function validarId(id,res){
+function validarId(id, res) {
 
-    return  !isNaN(id) 
-    
+    return !isNaN(id)
 
-}
-
-const listarProdutosPorCategoria = async(req,res)=>{
-
-    const {categoria_id} = req.query
-        
-    if(validarId(categoria_id)){
-
-    if(categoria_id){
-        try {
-            
-            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ',categoria_id)
-            return res.status(200).json({listagem:produtosListar.rows})
-        } catch (error) {
-            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
-        }
-    }else{
-        try {
-            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
-            return res.status(200).json({listagem:produtosListar.rows})
-        } catch (error) {
-            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
-        }
-    }
-
-} else{
-    return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
 
 }
-}
-async function consultarProduto(id){
 
-    
-    const produtoExiste = await knex('produtos')
-            .where("id", "=", id)
-            .first()
+const listarProdutosPorCategoria = async (req, res) => {
 
-        return  produtoExiste ? produtoExiste : false
-    
+    const { categoria_id } = req.query
 
-}
-const listarProduto = async(req,res)=>{
+    if (validarId(categoria_id)) {
 
-        const {id} = req.params
-        if(validarId(id)){
-            const produto = await consultarProduto(id)
-
-            if(produto){
-                return res.status(200).json(produto)
-            }else{
-                return res.status(404).json({mensagem:"Produto não encontrado"})
-            }
-        }else{
-            return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
-        }
-        
-    
-}
-const excluirProduto= async(req,res)=>{
-
-    const {id} = req.params
-    
-    if(validarId(id)){
-        const produto = await consultarProduto(id)
-        if(produto){
+        if (categoria_id) {
             try {
-                const teste = await knex("produtos").del().where({id:produto.id})
-                return res.status(200).json({mensagem:"Produto excluido com sucesso!!"})
+
+                const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ', categoria_id)
+                return res.status(200).json({ listagem: produtosListar.rows })
             } catch (error) {
-                return res.status(404).json({mensagem:"Produto não encontrado"})
+                return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
             }
-        }else{
-            return res.status(404).json({mensagem:"Produto não encontrado"})
+        } else {
+            try {
+                const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
+                return res.status(200).json({ listagem: produtosListar.rows })
+            } catch (error) {
+                return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+            }
         }
-    }else{
+
+    } else {
+        return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+
+    }
+}
+async function consultarProduto(id) {
+
+
+    const produtoExiste = await knex('produtos')
+        .where("id", "=", id)
+        .first()
+
+    return produtoExiste ? produtoExiste : false
+
+
+}
+const listarProduto = async (req, res) => {
+
+    const { id } = req.params
+    if (validarId(id)) {
+        const produto = await consultarProduto(id)
+
+        if (produto) {
+            return res.status(200).json(produto)
+        } else {
+            return res.status(404).json({ mensagem: "Produto não encontrado" })
+        }
+    } else {
         return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
     }
-    
+
+
+}
+const excluirProduto = async (req, res) => {
+
+    const { id } = req.params
+
+    if (validarId(id)) {
+        const produto = await consultarProduto(id)
+        if (produto) {
+            try {
+                const teste = await knex("produtos").del().where({ id: produto.id })
+                return res.status(200).json({ mensagem: "Produto excluido com sucesso!!" })
+            } catch (error) {
+                return res.status(404).json({ mensagem: "Produto não encontrado" })
+            }
+        } else {
+            return res.status(404).json({ mensagem: "Produto não encontrado" })
+        }
+    } else {
+        return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
+    }
+
 }
 
 module.exports = {
