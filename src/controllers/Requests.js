@@ -15,10 +15,7 @@ const cadastrarPedido = async (req, res) => {
         };
 
 
-        // const manipularPedido = JSON.parse(pedido_produtos);
         let cadastrarTodosItens = [];
-
-
         for (let i of pedido_produtos) {
 
             const encontrarProduto = await knex('produtos').where('id', "=", i.produto_id).first();
@@ -41,7 +38,7 @@ const cadastrarPedido = async (req, res) => {
 
         };
 
-        await knex('pedidos').insert({ cadastrarTodosItens });
+        await knex('pedidos').insert(cadastrarTodosItens);
 
         return res.status(200).json();
 
