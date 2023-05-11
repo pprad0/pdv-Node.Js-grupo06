@@ -1,4 +1,5 @@
 const knex = require('../db/Connection');
+const { transportador } = require('../controllers/email');
 
 const cadastrarPedido = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -44,6 +45,15 @@ const cadastrarPedido = async (req, res) => {
 
         await knex('pedidos').insert(cadastrarTodosItens);
 
+
+        transportador.sendMail({
+            from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+            to: `${clienteExiste.nome} <${clienteExiste.email}>`,
+            subject: 'Pedido cadastrado com sucesso!',
+            text: `Olá, ${clienteExiste.nome}, seu pedido acaba de ser cadastrado em nosso sistema!`
+
+        });
+
         return res.status(201).json();
 
     } catch (error) {
@@ -51,5 +61,11 @@ const cadastrarPedido = async (req, res) => {
     }
 };
 
+const listarPedido = async (req, res) => {
 
-module.exports = { cadastrarPedido };
+
+};
+
+
+
+module.exports = { cadastrarPedido, listarPedido };

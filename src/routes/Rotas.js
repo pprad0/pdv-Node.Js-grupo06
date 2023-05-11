@@ -57,5 +57,7 @@ rotas.get('/cliente/:id', cliente.detalharCliente);
 
 //rotas pedidos
 rotas.post('/pedido', pedidos.cadastrarPedido);
+rotas.get('/pedido', pedidos.listarPedido);
+
 
 module.exports = rotas;

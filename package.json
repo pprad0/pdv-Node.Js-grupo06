@@ -29,6 +29,7 @@
     "joi-translation-pt-br": "^0.0.6",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.2",
+    "nodemailer": "^6.9.2",
     "pg": "^8.10.0",
     "yup": "^1.1.1"
   },
