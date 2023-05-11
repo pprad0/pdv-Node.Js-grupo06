@@ -45,7 +45,7 @@ create table clientes
   id serial primary key,
   nome text not null,
   email text unique not null,
-  cpf integer unique not null,
+  cpf bigint unique not null,
   cep integer,
   rua text,
   numero integer,

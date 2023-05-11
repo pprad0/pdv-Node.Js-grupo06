@@ -5,6 +5,14 @@ const { id } = require('../models/productSchema')
 const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
 
+    if (quantidade_estoque < 0) {
+        return res.status(400).json({ mensagem: 'A quantidade em estoque deve ser igual ou maior que zero ! ' })
+    }
+
+    if (valor <= 0) {
+        return res.status(400).json({ mensagem: 'O valor do produto deve ser maior que zero ! ' })
+    }
+
     try {
         const categoriaExiste = await knex('categorias').where("id", "=", categoria_id).first()
         if (!categoriaExiste) {
@@ -19,10 +27,11 @@ const cadastrarProduto = async (req, res) => {
                 categoria_id
             })
 
-        return res.status(201).json()
+        return res.status(201).send()
 
 
     } catch (error) {
+
         return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
     }
 }
@@ -30,6 +39,13 @@ const cadastrarProduto = async (req, res) => {
 const atualizarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
     const { id } = req.params
+
+    if (quantidade_estoque < 0) {
+        return res.status(400).json({ mensagem: 'A quantidade em estoque deve ser igual ou maior que zero! ' })
+    }
+    if (valor <= 0) {
+        return res.status(400).json({ mensagem: 'O valor do produto deve ser maior que zero! ' })
+    }
 
     try {
         const categoriaExiste = await knex('categorias')
@@ -76,13 +92,16 @@ const listarProdutosPorCategoria = async (req, res) => {
 
     const { categoria_id } = req.query
 
+
     if (validarId(categoria_id)) {
+
 
         if (categoria_id) {
             try {
 
                 const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ', categoria_id)
                 return res.status(200).json({ listagem: produtosListar.rows })
+
             } catch (error) {
                 return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
             }
@@ -92,6 +111,8 @@ const listarProdutosPorCategoria = async (req, res) => {
                 return res.status(200).json({ listagem: produtosListar.rows })
             } catch (error) {
                 return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+
+
             }
         }
 
