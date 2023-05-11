@@ -3,30 +3,30 @@ const knex = require('../db/Connection');
 const cadastrarPedido = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body;
 
-    if (!cliente_id, !pedido_produtos) {
+    if (!cliente_id || !pedido_produtos) {
         return res.status(400).json({ mensagem: 'Preenchimento dos campos obrigatório!' });
     };
 
     try {
 
-        const validarCliente = await knex('clientes').where('id', "=", cliente_id).first();
-        if (!validarCliente) {
+        const clienteExiste = await knex('clientes').where('id', "=", cliente_id).first();
+        if (!clienteExiste) {
             return res.status(400).json({ mensagem: 'Cliente não encontrado!' });
         };
 
 
-        const manipularPedido = JSON.parse(pedido_produtos);
+        // const manipularPedido = JSON.parse(pedido_produtos);
         let cadastrarTodosItens = [];
 
 
-        for (let i of manipularPedido) {
+        for (let i of pedido_produtos) {
 
             const encontrarProduto = await knex('produtos').where('id', "=", i.produto_id).first();
             if (!encontrarProduto) {
                 return res.status(400).json({ mensagem: 'Produto não encontrado!' });
             };
 
-            if (encontarProduto.quantidade_estoque < i.quantidade_produto) {
+            if (encontrarProduto.quantidade_estoque < i.quantidade_produto) {
                 return res.status(400).json({ mensagem: 'Estoque insuficiente!' });
             }
 
@@ -37,11 +37,11 @@ const cadastrarPedido = async (req, res) => {
                 quantidade_produto: i.quantidade_produto
             };
 
-            cadastrarTodosItens = cadastrarTodosItens.push(pedido);
+            cadastrarTodosItens.push(pedido);
 
         };
 
-        await knex('pedidos').insert(cadastrarTodosItens);
+        await knex('pedidos').insert({ cadastrarTodosItens });
 
         return res.status(200).json();
 
