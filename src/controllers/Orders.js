@@ -57,15 +57,41 @@ const cadastrarPedido = async (req, res) => {
         return res.status(201).json();
 
     } catch (error) {
-        return res.status(500).json({ mensagem: error.message });
+        return res.status(500).json({ mensagem: 'O servidor apresentou um erro!' });
     }
 };
 
 const listarPedido = async (req, res) => {
 
+    try {
+        const pedidos = await knex('pedidos');
+        return res.status(200).json(pedidos);
 
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'O servidor apresentou um erro!' });
+    }
+};
+
+const listarPedidoId = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+
+        const verificarId = await knex('clientes').where('id', id);
+
+        if (!verificarId) {
+            return res.status(400).json({ mensagem: 'Cliente não encontrado!' });
+        };
+
+        const pedidosId = await knex('pedidos').where('id', id).first();
+
+        return res.status(200).json(pedidosId);
+
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'O servidor apresentou um erro!' });
+    }
 };
 
 
 
-module.exports = { cadastrarPedido, listarPedido };
+module.exports = { cadastrarPedido, listarPedido, listarPedidoId };
