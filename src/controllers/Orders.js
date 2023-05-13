@@ -5,7 +5,7 @@ const cadastrarPedido = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body;
 
     if (!cliente_id || !pedido_produtos) {
-        return res.status(400).json({ mensagem: 'Preenchimento dos campos obrigatório!' });
+        return res.status(400).json({ mensagem: "Preencha 'cliente_id' e 'pedido_produtos'." });
     };
 
     try {
