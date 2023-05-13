@@ -2,7 +2,7 @@ const { isNumber } = require('class-validator')
 const knex = require('../db/Connection')
 const { id } = require('../models/productSchema')
 
-const cadastrarProduto = async (req, res) => {
+const cadastrarProduto = async(req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
 
     if (quantidade_estoque < 0) {
@@ -36,7 +36,7 @@ const cadastrarProduto = async (req, res) => {
     }
 }
 
-const atualizarProduto = async (req, res) => {
+const atualizarProduto = async(req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body
     const { id } = req.params
 
@@ -81,6 +81,7 @@ const atualizarProduto = async (req, res) => {
     }
 
 }
+
 function validarId(id, res) {
 
     return !isNaN(id)
@@ -88,33 +89,28 @@ function validarId(id, res) {
 
 }
 
-const listarProdutosPorCategoria = async (req, res) => {
+const listarProdutosPorCategoria = async(req, res) => {
 
     const { categoria_id } = req.query
 
-
-    if (validarId(categoria_id)) {
-
-
-        if (categoria_id) {
-            try {
-
-                const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ', categoria_id)
-                return res.status(200).json({ listagem: produtosListar.rows })
-
-            } catch (error) {
-                return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
-            }
-        } else {
-            try {
-                const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
-                return res.status(200).json({ listagem: produtosListar.rows })
-            } catch (error) {
-                return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
-
-
-            }
+    if (!categoria_id) {
+        try {
+            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id  ')
+            return res.status(200).json({ listagem: produtosListar.rows })
+        } catch (error) {
+            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
         }
+    } else if (validarId(categoria_id)) {
+
+        try {
+
+            const produtosListar = await knex.raw('SELECT p.*,categorias.descricao as categoria FROM produtos as p JOIN categorias  ON categoria_id = categorias.id WHERE categoria_id=? ', categoria_id)
+            return res.status(200).json({ listagem: produtosListar.rows })
+
+        } catch (error) {
+            return res.status(500).json({ mensagem: 'O servidor apresentou um erro !' })
+        }
+
 
     } else {
         return res.status(400).json({ mensagem: 'Parâmetro inválido,Insira somente números !' })
@@ -132,7 +128,7 @@ async function consultarProduto(id) {
 
 
 }
-const listarProduto = async (req, res) => {
+const listarProduto = async(req, res) => {
 
     const { id } = req.params
     if (validarId(id)) {
@@ -149,7 +145,7 @@ const listarProduto = async (req, res) => {
 
 
 }
-const excluirProduto = async (req, res) => {
+const excluirProduto = async(req, res) => {
 
     const { id } = req.params
 
@@ -157,11 +153,21 @@ const excluirProduto = async (req, res) => {
         const produto = await consultarProduto(id)
         if (produto) {
             try {
-                const teste = await knex("produtos").del().where({ id: produto.id })
-                return res.status(200).json({ mensagem: "Produto excluido com sucesso!!" })
+                const produtoExcluir = await knex.raw('SELECT * FROM pedidos WHERE produto_id = ?', id)
+                if (produtoExcluir.rows.length > 0) {
+                    return res.status(401).json({ Message: "O produto não pode ser excluido, pois esta vinculado a um pedido " })
+                } else {
+                    try {
+                        const teste = await knex("produtos").del().where({ id: produto.id })
+                        return res.status(200).json({ mensagem: "Produto excluido com sucesso!!" })
+                    } catch (error) {
+                        return res.status(404).json({ mensagem: "Produto não encontrado" })
+                    }
+                }
             } catch (error) {
-                return res.status(404).json({ mensagem: "Produto não encontrado" })
+                return error
             }
+
         } else {
             return res.status(404).json({ mensagem: "Produto não encontrado" })
         }
@@ -178,6 +184,3 @@ module.exports = {
     listarProduto,
     excluirProduto
 }
-
-
-

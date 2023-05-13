@@ -5,7 +5,7 @@ const knex = require('../db/Connection')
 const schema = require('../models/loginSchema')
 
 
-const loginUser = async (req, res) => {
+const loginUser = async(req, res) => {
     const { email, senha } = req.body;
 
 
@@ -32,6 +32,7 @@ const loginUser = async (req, res) => {
         })
 
     } catch (error) {
+
         return res.status(500).json('Erro interno do servidor !')
     }
 }

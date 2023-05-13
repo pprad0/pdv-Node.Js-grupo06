@@ -25,8 +25,7 @@ const clientValidation = require('../middlewares/clientValidate');
 const pedidos = require('../controllers/Orders');
 
 
-rotas.get('/', express.static("desafio-front"));
-rotas.get('/produtos', express.static("desafio-front"));
+
 
 //cadastro, login e listar categorias
 rotas.post('/login', loginValidationMiddleware, loginUser);
