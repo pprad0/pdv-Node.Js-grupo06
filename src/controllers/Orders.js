@@ -54,7 +54,7 @@ const cadastrarPedido = async (req, res) => {
 
         });
 
-        return res.status(201).json();
+        return res.status(201).json({ mensagem: `Email enviado para ${clienteExiste.email} com sucesso! ` });
 
     } catch (error) {
         return res.status(500).json({ mensagem: 'O servidor apresentou um erro!' });
