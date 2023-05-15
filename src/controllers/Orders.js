@@ -46,15 +46,13 @@ const cadastrarPedido = async (req, res) => {
         await knex('pedidos').insert(cadastrarTodosItens);
 
 
-        // transportador.sendMail({
-        //     from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-        //     to: `${clienteExiste.nome} <${clienteExiste.email}>`,
-        //     subject: 'Pedido cadastrado com sucesso!',
-        //     text: `Olá, ${clienteExiste.nome}, seu pedido acaba de ser cadastrado em nosso sistema!`
+        transportador.sendMail({
+            from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+            to: `${clienteExiste.nome} <${clienteExiste.email}>`,
+            subject: 'Pedido cadastrado com sucesso!',
+            text: `Olá, ${clienteExiste.nome}, seu pedido acaba de ser cadastrado em nosso sistema!`
 
-        // });
-
-        return res.status(201).json();
+        });
 
         return res.status(201).json({ mensagem: `Email enviado para ${clienteExiste.email} com sucesso! ` });
 
