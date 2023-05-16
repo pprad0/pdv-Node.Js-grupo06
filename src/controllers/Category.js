@@ -9,7 +9,7 @@ const listarCategories = async (req, res) => {
         return res.status(200).json(categoriaListar)
 
     } catch (error) {
-
+        console.log(error)
         return res.status(500).json({ mensagem: error })
     }
 }
