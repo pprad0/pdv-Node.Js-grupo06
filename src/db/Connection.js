@@ -15,4 +15,17 @@ const knex = require('knex')({
 
 });
 
+knex.raw('SELECT 1+1 AS result')
+    .then(() => {
+        console.log('Conexão bem-sucedida!');
+        // Faça outras operações com o Knex aqui
+    })
+    .catch((error) => {
+        console.error('Erro ao conectar:', error);
+    })
+    .finally(() => {
+        // Encerre a conexão com o banco de dados
+        knex.destroy();
+    });
+
 module.exports = knex;
