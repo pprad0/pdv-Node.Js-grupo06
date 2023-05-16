@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const knex = require('knex')({
 
-    client: 'pg',
+    client: 'postgresql',
 
     connection: 'postgres://kdimywow:6SAdrtRXF2tzPs8LNDa6Av5CjHyIq-rA@babar.db.elephantsql.com/kdimywow'
 
